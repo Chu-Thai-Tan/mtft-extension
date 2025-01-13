@@ -1,6 +1,27 @@
-import { setupAdRemover } from './utils/adRemover.js';
+console.log('MetaTFT Helper Extension loaded - ' + new Date().toISOString());
 
-console.log('MetaTFT Helper Extension loaded');
+// Wait for DOM to be ready
+function init() {
+  console.log('Initializing ad remover...');
+  const targetClass = 'inline_ad_container';
+  
+  // Check if elements exist
+  const elements = document.getElementsByClassName(targetClass);
+  console.log('Found elements:', elements.length);
+  
+  // Import and setup ad remover
+  import('./utils/adRemover.js')
+    .then(({ setupAdRemover }) => {
+      setupAdRemover(targetClass);
+    })
+    .catch(error => {
+      console.error('Failed to load ad remover:', error);
+    });
+}
 
-// Remove ad containers as soon as possible
-setupAdRemover('inline_ad_container');
+// Run initialization
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

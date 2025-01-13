@@ -3,10 +3,14 @@
  * @param {string} className - The class name to target
  */
 export function removeElementsByClass(className) {
-  const elements = document.getElementsByClassName(className);
-  while(elements.length > 0) {
-    elements[0].parentNode.removeChild(elements[0]);
-  }
+  console.log('Attempting to remove elements with class:', className);
+  const elements = Array.from(document.getElementsByClassName(className));
+  console.log('Found elements:', elements.length, elements);
+  
+  elements.forEach(element => {
+    console.log('Removing element:', element);
+    element.remove();
+  });
 }
 
 /**
@@ -14,18 +18,22 @@ export function removeElementsByClass(className) {
  * @param {string} className - The class name to target
  */
 export function setupAdRemover(className) {
-  // Remove existing elements
+  console.log('Setting up ad remover for class:', className);
+  
+  // Initial removal
   removeElementsByClass(className);
 
   // Watch for new elements
-  const observer = new MutationObserver(() => {
+  const observer = new MutationObserver((mutations) => {
+    console.log('DOM mutation detected');
     removeElementsByClass(className);
   });
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
   });
 
+  console.log('Observer setup complete');
   return observer;
 }

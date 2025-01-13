@@ -3,19 +3,26 @@
   "name": "MetaTFT Helper",
   "version": "1.0.0",
   "description": "Chrome extension for metatft.com",
-  "permissions": ["activeTab"],
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
   "host_permissions": [
-    "*://metatft.com/*"
+    "*://metatft.com/*",
+    "*://*.metatft.com/*"
   ],
   "content_scripts": [
     {
-      "matches": ["*://metatft.com/*"],
-      "js": ["utils/adRemover.js", "content.js"],
-      "type": "module"
+      "matches": [
+        "*://metatft.com/*",
+        "*://*.metatft.com/*"
+      ],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
     }
   ],
   "icons": {
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "48": "icons/tft13_kogmaw.png",
+    "128": "icons/tft13_kogmaw.png"
   }
 }
